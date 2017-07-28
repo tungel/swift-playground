@@ -1,5 +1,14 @@
+// Ref: https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/
+
 func sayHello(name: String) {
     print("Hello, \(name)!")
+}
+
+if CommandLine.arguments.count != 2 {
+    print("Usage: hello NAME")
+} else {
+    let name = CommandLine.arguments[1]
+    sayHello(name: name)
 }
 
 func factorial(n: Int) -> Int {
@@ -9,6 +18,18 @@ func factorial(n: Int) -> Int {
 
 let number = 5
 print("\(number)! is equal to \(factorial(n: number))")
+
+
+
+//======================================================================
+// Control flow
+//======================================================================
+var total = 0
+for i in 0..<4 {
+    total += i
+}
+print(total)
+//----------------------------------------------------------------------
 
 
 //======================================================================
@@ -83,6 +104,25 @@ print("Doubled: \(doubler(8))")
 
 
 //======================================================================
+// A function can take another function as one of its arguments.
+//======================================================================
+func hasAnyMatches(list: [Int], condition: (Int) -> Bool) -> Bool {
+    for item in list {
+        if condition(item) {
+            return true
+        }
+    }
+    return false
+}
+func lessThanTen(number: Int) -> Bool {
+    return number < 10
+}
+var numbers = [20, 19, 7, 12]
+hasAnyMatches(list: numbers, condition: lessThanTen)
+//----------------------------------------------------------------------
+
+
+//======================================================================
 // closures
 //======================================================================
 let numbers = [3, 4, 2, 5, 1]
@@ -94,13 +134,63 @@ numbers.map({ (number: Int) -> Int in
 // sorter version
 // yield the same result as the longer version above
 numbers.map({ n in n*3 })
+// or even shorter, we can remove the parentheses
+numbers.map { n in n*3 }
 //----------------------------------------------------------------------
 
 
-if CommandLine.arguments.count != 2 {
-    print("Usage: hello NAME")
-} else {
-    let name = CommandLine.arguments[1]
-    sayHello(name: name)
+//======================================================================
+// Sort an array of number in descending order
+// You can refer to parameters by number instead of by name
+//======================================================================
+let numbers = [3, 4, 2, 5, 1]
+let sortedNumbers = numbers.sorted { $0 > $1 }
+print(sortedNumbers)
+//----------------------------------------------------------------------
+
+
+//======================================================================
+// Protocol (similar to interface in Java?)
+//======================================================================
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
 }
+
+// Classes, enumerations, and structs can all adopt protocols.
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += "  Now 100% adjusted."
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {
+        simpleDescription += " (adjusted)"
+    }
+}
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+//----------------------------------------------------------------------
+
+//======================================================================
+// matching
+//======================================================================
+let test: UInt32 = 5
+var description: String = ""
+switch test {
+    case 0..<10:
+        description = "less than ten"
+    default:
+        description = "greater than ten"
+}
+print("\(description)")
+//----------------------------------------------------------------------
 
