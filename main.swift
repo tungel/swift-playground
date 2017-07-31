@@ -131,7 +131,7 @@ numbers.map({ (number: Int) -> Int in
     return result
 })
 
-// sorter version
+// shorter version
 // yield the same result as the longer version above
 numbers.map({ n in n*3 })
 // or even shorter, we can remove the parentheses
@@ -192,5 +192,25 @@ switch test {
         description = "greater than ten"
 }
 print("\(description)")
+//----------------------------------------------------------------------
+
+//======================================================================
+// sort the value (which is an array in this example) in-place of each key
+// in a dictionary in descending order
+//======================================================================
+var interestingNumbers = ["primes": [2, 3, 5, 7, 11, 13, 15],
+                          "triangular": [1, 3, 6, 10, 15, 21, 28],
+                          "hexagonal": [1, 6, 15, 28, 45, 66, 91]]
+for key in interestingNumbers.keys {
+    interestingNumbers[key]?.sort(by: >)
+}
+
+// print the newly in-place sorted array of key "primes"
+print(interestingNumbers["primes"]!)
+
+// iterating over the contents of a dictionary
+for (key, val) in interestingNumbers {
+    print("'\(key)' contains array of '\(val)'")
+}
 //----------------------------------------------------------------------
 
